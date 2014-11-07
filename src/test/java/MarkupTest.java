@@ -232,21 +232,21 @@ public class MarkupTest {
 
         markupEntries = MarkupParser.getMarkupEntries(string, MarkupParser.HEADER);
         assertThat(markupEntries, hasSize(1));
-        assertThat(markupEntries.get(0).type(), is(MarkupType.HEADER));
+        assertThat(markupEntries.get(0).type, is(MarkupType.HEADER));
 
         markupEntries = MarkupParser.getMarkupEntries(string, MarkupParser.BOLD);
         assertThat(markupEntries, hasSize(2));
-        assertThat(markupEntries.get(0).type(), is(MarkupType.BOLD));
-        assertThat(markupEntries.get(1).type(), is(MarkupType.BOLD));
+        assertThat(markupEntries.get(0).type, is(MarkupType.BOLD));
+        assertThat(markupEntries.get(1).type, is(MarkupType.BOLD));
 
         markupEntries = MarkupParser.getMarkupEntries(string, MarkupParser.ITALIC);
         assertThat(markupEntries, hasSize(2));
-        assertThat(markupEntries.get(0).type(), is(MarkupType.ITALIC));
-        assertThat(markupEntries.get(1).type(), is(MarkupType.ITALIC));
+        assertThat(markupEntries.get(0).type, is(MarkupType.ITALIC));
+        assertThat(markupEntries.get(1).type, is(MarkupType.ITALIC));
 
         markupEntries = MarkupParser.getMarkupEntries(string, MarkupParser.LINK);
         assertThat(markupEntries, hasSize(1));
-        assertThat(markupEntries.get(0).type(), is(MarkupType.LINK));
+        assertThat(markupEntries.get(0).type, is(MarkupType.LINK));
 
         markupEntries = MarkupParser.getMarkupEntries(string, MarkupParser.GMAIL);
         assertThat(markupEntries, is(empty()));
@@ -263,9 +263,9 @@ public class MarkupTest {
         return new TypeSafeMatcher<MarkupEntry>() {
             @Override
             protected boolean matchesSafely(MarkupEntry entry) {
-                return entry.type() == type && entry.start() == start && entry.end() == end &&
-                        (entry.text() == null && text == null || (entry.text() != null && entry.text().equals(text))) &&
-                        (entry.link() == null && link == null || (entry.link() != null && entry.link().equals(link)));
+                return entry.type == type && entry.start == start && entry.end == end &&
+                        (entry.text == null && text == null || (entry.text != null && entry.text.equals(text))) &&
+                        (entry.link == null && link == null || (entry.link != null && entry.link.equals(link)));
             }
 
             @Override
