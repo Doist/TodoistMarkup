@@ -3,7 +3,7 @@ package com.todoist.markup;
 import java.util.regex.Pattern;
 
 class Patterns {
-    public static final Pattern HEADER = Pattern.compile("^\\*\\s*");
+    public static final Pattern HEADER = Pattern.compile("^\\*\\s+");
     public static final Pattern BOLD = Pattern.compile("!!\\s*((?!!!).+?)\\s*!!");
     public static final Pattern ITALIC = Pattern.compile("__\\s*((?!__).+?)\\s*__");
     public static final Pattern LINK = Pattern.compile("((?:[a-zA-Z]+)://[^\\s]+)(?:\\s+\\(([^)]+)\\))?");
