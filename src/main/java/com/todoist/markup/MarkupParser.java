@@ -9,12 +9,14 @@ public class MarkupParser {
     public static final int HEADER = 1;
     public static final int BOLD = 2;
     public static final int ITALIC = 4;
-    public static final int LINK = 8;
-    public static final int GMAIL = 16;
-    public static final int OUTLOOK = 32;
-    public static final int THUNDERBIRD = 64;
-    public static final int EMOJI = 128;
-    public static final int ALL = 255;
+    public static final int INLINE_CODE = 8;
+    public static final int LINK = 16;
+    public static final int GMAIL = 32;
+    public static final int OUTLOOK = 64;
+    public static final int THUNDERBIRD = 128;
+    public static final int EMOJI = 256;
+
+    public static final int ALL = 511;
 
     /**
      * Returns all {@link MarkupEntry} that matches this {@code string}.
@@ -40,6 +42,10 @@ public class MarkupParser {
 
             if ((flags & ITALIC) == ITALIC) {
                 parseItalicMarkupEntries(string, markupEntries);
+            }
+
+            if ((flags & INLINE_CODE) == INLINE_CODE) {
+                parseInlineCodeMarkupEntries(string, markupEntries);
             }
 
             if ((flags & LINK) == LINK) {
@@ -89,6 +95,15 @@ public class MarkupParser {
         while (matcher.find()) {
             String text = matcher.group(1);
             markupEntries.add(new MarkupEntry(MarkupType.ITALIC, matcher.start(), matcher.end(), text));
+        }
+    }
+
+    private static void parseInlineCodeMarkupEntries(String string, List<MarkupEntry> markupEntries) {
+        Matcher matcher = Patterns.INLINE_CODE.matcher(string);
+
+        while (matcher.find()) {
+            String text = matcher.group(1);
+            markupEntries.add(new MarkupEntry(MarkupType.INLINE_CODE, matcher.start(), matcher.end(), text));
         }
     }
 

@@ -17,6 +17,11 @@ public enum MarkupType {
     ITALIC,
 
     /**
+     * Inline code is surrounded by "`"
+     */
+    INLINE_CODE,
+
+    /**
      * Links can be plain links or contain a description using the format "http://domain.com (description)".
      */
     LINK,
