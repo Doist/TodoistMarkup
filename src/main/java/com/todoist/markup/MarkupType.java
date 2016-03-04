@@ -22,6 +22,11 @@ public enum MarkupType {
     INLINE_CODE,
 
     /**
+     * Code block is surrounded by "```"
+     */
+    CODE_BLOCK,
+
+    /**
      * Links can be plain links or contain a description using the format "http://domain.com (description)".
      */
     LINK,
