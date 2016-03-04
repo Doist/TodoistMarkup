@@ -5,6 +5,8 @@ TodoistMarkup is a Java library which provides basic parsing of the markup suppo
 * Headers
 * Bold
 * Italic
+* Inline Code
+* Code blocks
 * Links
 * Gmail
 * Outlook
