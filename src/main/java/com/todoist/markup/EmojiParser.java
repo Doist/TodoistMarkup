@@ -16,8 +16,7 @@ public class EmojiParser {
     private static final String EMOJI_TODOIST = "emojis_todoist.json";
 
     private static Map<String, String> sEmojiMap = new HashMap<>();
-
-    public static Pattern sEmojiPattern;
+    private static Pattern sEmojiPattern;
 
     public static Pattern getEmojiPattern() {
         if (sEmojiPattern == null) {
