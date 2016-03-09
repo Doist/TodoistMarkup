@@ -9,12 +9,22 @@ TodoistMarkup is a Java library which provides basic parsing of the markup suppo
 * Gmail
 * Outlook
 * Thunderbird
+* Emojis
 
 ## Usage
 
 Pass a string (eg. a task or note content) to `MarkupParser#getMarkupEntries` and a list of `MarkupEntry` will be returned with information about what it found and where it found it.
 
 An optional list of flags can be included to limit the types of markup to be searched.
+
+To get emojis use `EmojiParser`:
+```
+Matcher matcher = EmojiParser.getEmojiPattern().matcher(string);
+while (matcher.find(start)) {
+    String emoji = EmojiParser.getEmoji(matcher.group(1));
+    ...
+}
+```
 
 ## License
 
