@@ -12,7 +12,8 @@ public class MarkupParser {
     public static final int GMAIL = 16;
     public static final int OUTLOOK = 32;
     public static final int THUNDERBIRD = 64;
-    public static final int ALL = 127;
+    public static final int EMOJI = 128;
+    public static final int ALL = 255;
 
     /**
      * Returns all {@link MarkupEntry} that matches this {@code string}.
