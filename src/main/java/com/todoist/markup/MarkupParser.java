@@ -5,11 +5,21 @@ import java.util.List;
 import java.util.regex.Matcher;
 
 public class MarkupParser {
+    public static final int HEADER = 1;
+    public static final int BOLD = 2;
+    public static final int ITALIC = 4;
+    public static final int LINK = 8;
+    public static final int GMAIL = 16;
+    public static final int OUTLOOK = 32;
+    public static final int THUNDERBIRD = 64;
+    public static final int EMOJI = 128;
+    public static final int ALL = 255;
+
     /**
      * Returns all {@link MarkupEntry} that matches this {@code string}.
      */
     public static List<MarkupEntry> getMarkupEntries(String string) {
-        return getMarkupEntries(string, MarkupFlags.ALL);
+        return getMarkupEntries(string, ALL);
     }
 
     /**
@@ -19,35 +29,35 @@ public class MarkupParser {
         List<MarkupEntry> markupEntries = new ArrayList<MarkupEntry>();
 
         if (string != null) {
-            if ((flags & MarkupFlags.HEADER) == MarkupFlags.HEADER) {
+            if ((flags & HEADER) == HEADER) {
                 parseHeaderMarkupEntries(string, markupEntries);
             }
 
-            if ((flags & MarkupFlags.BOLD) == MarkupFlags.BOLD) {
+            if ((flags & BOLD) == BOLD) {
                 parseBoldMarkupEntries(string, markupEntries);
             }
 
-            if ((flags & MarkupFlags.ITALIC) == MarkupFlags.ITALIC) {
+            if ((flags & ITALIC) == ITALIC) {
                 parseItalicMarkupEntries(string, markupEntries);
             }
 
-            if ((flags & MarkupFlags.LINK) == MarkupFlags.LINK) {
+            if ((flags & LINK) == LINK) {
                 parseLinkMarkupEntries(string, markupEntries);
             }
 
-            if ((flags & MarkupFlags.GMAIL) == MarkupFlags.GMAIL) {
+            if ((flags & GMAIL) == GMAIL) {
                 parseGmailMarkupEntries(string, markupEntries);
             }
 
-            if ((flags & MarkupFlags.OUTLOOK) == MarkupFlags.OUTLOOK) {
+            if ((flags & OUTLOOK) == OUTLOOK) {
                 parseOutlookMarkupEntries(string, markupEntries);
             }
 
-            if ((flags & MarkupFlags.THUNDERBIRD) == MarkupFlags.THUNDERBIRD) {
+            if ((flags & THUNDERBIRD) == THUNDERBIRD) {
                 parseThunderbirdMarkupEntries(string, markupEntries);
             }
 
-            if ((flags & MarkupFlags.EMOJI) == MarkupFlags.EMOJI) {
+            if ((flags & EMOJI) == EMOJI) {
                 parseEmojiMarkupEntries(string, markupEntries);
             }
         }
