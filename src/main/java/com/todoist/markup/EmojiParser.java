@@ -11,6 +11,7 @@ import java.util.Map;
 import java.util.regex.Pattern;
 
 class EmojiParser {
+    private static final String REGEXP_STANDARD_EMOJI = "(:[a-zA-Z\\p{L}0-9_’\\-\\.\\&]+:)";
     private static final String EMOJI_STANDARD = "emojis_standard.json";
     private static final String EMOJI_TODOIST = "emojis_todoist.json";
 
@@ -62,7 +63,7 @@ class EmojiParser {
             StringBuilder patternBuilder = new StringBuilder();
 
             // Pattern for standard emojis.
-            patternBuilder.append("(:[a-zA-Z\\p{L}0-9_’\\-\\.\\&]+:)");
+            patternBuilder.append(REGEXP_STANDARD_EMOJI);
 
             for(String shortcut : todoistShortcuts.keySet()) {
                 patternBuilder.append("|");
