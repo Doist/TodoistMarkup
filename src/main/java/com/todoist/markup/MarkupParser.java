@@ -143,7 +143,9 @@ public class MarkupParser {
 
         while (matcher.find()) {
             String emoji = getEmoji(matcher.group());
-            markupEntries.add(new MarkupEntry(MarkupType.EMOJI, matcher.start(), matcher.end(), emoji));
+            if(emoji != null) {
+                markupEntries.add(new MarkupEntry(MarkupType.EMOJI, matcher.start(), matcher.end(), emoji));
+            }
         }
     }
 
