@@ -1,5 +1,6 @@
 package com.todoist.markup;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -12,7 +13,8 @@ public class MarkupParser {
     public static final int GMAIL = 16;
     public static final int OUTLOOK = 32;
     public static final int THUNDERBIRD = 64;
-    public static final int ALL = 127;
+    public static final int EMOJI = 128;
+    public static final int ALL = 255;
 
     /**
      * Returns all {@link MarkupEntry} that matches this {@code string}.
@@ -54,6 +56,10 @@ public class MarkupParser {
 
             if ((flags & THUNDERBIRD) == THUNDERBIRD) {
                 parseThunderbirdMarkupEntries(string, markupEntries);
+            }
+
+            if ((flags & EMOJI) == EMOJI) {
+                parseEmojiMarkupEntries(string, markupEntries);
             }
         }
 
@@ -130,5 +136,35 @@ public class MarkupParser {
             String link = matcher.group(2);
             markupEntries.add(new MarkupEntry(MarkupType.THUNDERBIRD, matcher.start(), matcher.end(), text, link));
         }
+    }
+
+    private static void parseEmojiMarkupEntries(String string, List<MarkupEntry> markupEntries) {
+        Matcher matcher = EmojiParser.getEmojiPattern().matcher(string);
+
+        while (matcher.find()) {
+            String emoji = getEmoji(matcher.group());
+            if(emoji != null) {
+                markupEntries.add(new MarkupEntry(MarkupType.EMOJI, matcher.start(), matcher.end(), emoji));
+            }
+        }
+    }
+
+    public static String getEmoji(String key) {
+        return EmojiParser.getEmoji(key);
+    }
+
+    public static void initAsync() {
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    EmojiParser.init();
+                } catch (IOException e) {
+                    // Ignore. Very unlikely.
+                }
+            }
+        });
+        thread.setPriority(Thread.MIN_PRIORITY);
+        thread.start();
     }
 }

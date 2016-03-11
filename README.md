@@ -9,6 +9,7 @@ TodoistMarkup is a Java library which provides basic parsing of the markup suppo
 * Gmail
 * Outlook
 * Thunderbird
+* Emojis
 
 ## Usage
 
