@@ -1,5 +1,6 @@
 package com.todoist.markup;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -141,8 +142,27 @@ public class MarkupParser {
         Matcher matcher = EmojiParser.getEmojiPattern().matcher(string);
 
         while (matcher.find()) {
-            String emoji = EmojiParser.getEmoji(matcher.group());
+            String emoji = getEmoji(matcher.group());
             markupEntries.add(new MarkupEntry(MarkupType.EMOJI, matcher.start(), matcher.end(), emoji));
         }
+    }
+
+    public static String getEmoji(String key) {
+        return EmojiParser.getEmoji(key);
+    }
+
+    public static void initAsync() {
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    EmojiParser.init();
+                } catch (IOException e) {
+                    // Ignore. Very unlikely.
+                }
+            }
+        });
+        thread.setPriority(Thread.MIN_PRIORITY);
+        thread.start();
     }
 }

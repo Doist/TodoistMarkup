@@ -11,14 +11,14 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.regex.Pattern;
 
-public class EmojiParser {
+class EmojiParser {
     private static final String EMOJI_STANDARD = "emojis_standard.json";
     private static final String EMOJI_TODOIST = "emojis_todoist.json";
 
     private static Map<String, String> sEmojiMap = new HashMap<>();
     private static Pattern sEmojiPattern;
 
-    public static Pattern getEmojiPattern() {
+    static Pattern getEmojiPattern() {
         if (sEmojiPattern == null) {
             try {
                 init();
@@ -30,11 +30,11 @@ public class EmojiParser {
         return sEmojiPattern;
     }
 
-    public static String getEmoji(String key) {
+    static String getEmoji(String key) {
         return sEmojiMap.get(key);
     }
 
-    public static synchronized void init() throws IOException {
+    static synchronized void init() throws IOException {
         Map<String, String> todoistShortcuts = new HashMap<>();
         if (sEmojiMap.isEmpty()) {
             ObjectMapper mapper = new ObjectMapper();
