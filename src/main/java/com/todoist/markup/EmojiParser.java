@@ -7,7 +7,6 @@ import java.io.Closeable;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.regex.Pattern;
 
@@ -65,20 +64,9 @@ class EmojiParser {
             // Pattern for standard emojis.
             patternBuilder.append("(:[a-zA-Z\\p{L}0-9_’\\-\\.\\&]+:)");
 
-            if (todoistShortcuts.size() > 0) {
+            for(String shortcut : todoistShortcuts.keySet()) {
                 patternBuilder.append("|");
-
-                Iterator<String> iterator = todoistShortcuts.keySet().iterator();
-                while (true) {
-                    String s = iterator.next();
-                    patternBuilder.append(Pattern.quote(s));
-
-                    if (iterator.hasNext()) {
-                        patternBuilder.append("|");
-                    } else {
-                        break;
-                    }
-                }
+                patternBuilder.append(Pattern.quote(shortcut));
             }
 
             sEmojiPattern = Pattern.compile(patternBuilder.toString());
