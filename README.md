@@ -17,15 +17,6 @@ Pass a string (eg. a task or note content) to `MarkupParser#getMarkupEntries` an
 
 An optional list of flags can be included to limit the types of markup to be searched.
 
-To get emojis use `EmojiParser`:
-```
-Matcher matcher = EmojiParser.getEmojiPattern().matcher(string);
-while (matcher.find(start)) {
-    String emoji = EmojiParser.getEmoji(matcher.group(1));
-    ...
-}
-```
-
 ## License
 
     Copyright (c) 2014 Doist
