@@ -131,8 +131,7 @@ public class MarkupParser {
         Matcher matcher = EmojiParser.getEmojiPattern().matcher(string);
 
         while (matcher.find()) {
-            String emoji = EmojiParser.getEmoji(matcher.group(1));
-            String text = string.substring(matcher.start(), matcher.end());
+            String emoji = EmojiParser.getEmoji(matcher.group());
             markupEntries.add(new MarkupEntry(MarkupType.EMOJI, matcher.start(), matcher.end(), emoji));
         }
     }

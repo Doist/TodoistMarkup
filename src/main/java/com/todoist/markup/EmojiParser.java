@@ -62,8 +62,6 @@ public class EmojiParser {
         if (sEmojiPattern == null) {
             StringBuilder patternBuilder = new StringBuilder();
 
-            patternBuilder.append("(?:^|\\s|\\W)(");
-
             // Pattern for standard emojis.
             patternBuilder.append("(:[a-zA-Z\\p{L}0-9_’\\-\\.\\&]+:)");
 
@@ -82,8 +80,6 @@ public class EmojiParser {
                     }
                 }
             }
-
-            patternBuilder.append(")(?:$|\\s|\\W)");
 
             sEmojiPattern = Pattern.compile(patternBuilder.toString());
         }
