@@ -46,6 +46,10 @@ public class MarkupParser {
             if ((flags & MarkupFlags.THUNDERBIRD) == MarkupFlags.THUNDERBIRD) {
                 parseThunderbirdMarkupEntries(string, markupEntries);
             }
+
+            if ((flags & MarkupFlags.EMOJI) == MarkupFlags.EMOJI) {
+                parseEmojiMarkupEntries(string, markupEntries);
+            }
         }
 
         return markupEntries;
@@ -120,6 +124,16 @@ public class MarkupParser {
             String text = matcher.group(1);
             String link = matcher.group(2);
             markupEntries.add(new MarkupEntry(MarkupType.THUNDERBIRD, matcher.start(), matcher.end(), text, link));
+        }
+    }
+
+    private static void parseEmojiMarkupEntries(String string, List<MarkupEntry> markupEntries) {
+        Matcher matcher = EmojiParser.getEmojiPattern().matcher(string);
+
+        while (matcher.find()) {
+            String emoji = EmojiParser.getEmoji(matcher.group(1));
+            String text = string.substring(matcher.start(), matcher.end());
+            markupEntries.add(new MarkupEntry(MarkupType.EMOJI, matcher.start(), matcher.end(), emoji));
         }
     }
 }

@@ -34,5 +34,10 @@ public enum MarkupType {
     /**
      * Thunderbird's regular format is "[[thunderbird\ndescription\nemail_id\n]]".
      */
-    THUNDERBIRD
+    THUNDERBIRD,
+
+    /**
+     * Emojis are parsed by {@link EmojiParser}
+     */
+    EMOJI
 }
