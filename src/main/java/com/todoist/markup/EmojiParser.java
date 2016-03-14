@@ -63,12 +63,15 @@ class EmojiParser {
             StringBuilder patternBuilder = new StringBuilder();
 
             // Pattern for standard emojis.
+            patternBuilder.append("(");
             patternBuilder.append(REGEXP_STANDARD_EMOJI);
 
             for(String shortcut : todoistShortcuts.keySet()) {
                 patternBuilder.append("|");
                 patternBuilder.append(Pattern.quote(shortcut));
             }
+            // Exclude links ://
+            patternBuilder.append(")(?<!/)");
 
             sEmojiPattern = Pattern.compile(patternBuilder.toString());
         }
