@@ -70,7 +70,8 @@ class EmojiParser {
                 patternBuilder.append("|");
                 patternBuilder.append(Pattern.quote(shortcut));
             }
-            // Exclude links ://
+
+            // Don't convert :// part of url to emoji.
             patternBuilder.append(")(?!/)");
 
             sEmojiPattern = Pattern.compile(patternBuilder.toString());
