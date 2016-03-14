@@ -13,6 +13,7 @@ class Patterns {
     // Code block is wrapped with ```
     public static final Pattern CODE_BLOCK = Pattern.compile("(?:```)\\s*((?!(?:```)).+?)\\s*(?:```)", Pattern.DOTALL);
     public static final Pattern LINK = Pattern.compile("((?:[a-zA-Z]+)://[^\\s]+)(?:\\s+\\(([^)]+)\\))?");
+    public static final Pattern MARKDOWN_LINK = Pattern.compile("\\[(.+?)\\]\\((.+?)\\)");
     public static final Pattern GMAIL = Pattern.compile("\\[\\[gmail=\\s*(.*?)\\s*,\\s*(.*?)\\s*\\]\\]");
     public static final Pattern OUTLOOK = Pattern.compile("\\[\\[outlook=\\s*(.*?)\\s*,\\s*(.*?)\\s*\\]\\]");
     public static final Pattern THUNDERBIRD =

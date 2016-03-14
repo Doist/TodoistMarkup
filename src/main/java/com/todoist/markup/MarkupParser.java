@@ -12,12 +12,13 @@ public class MarkupParser {
     public static final int INLINE_CODE = 8;
     public static final int CODE_BLOCK = 16;
     public static final int LINK = 32;
-    public static final int GMAIL = 64;
-    public static final int OUTLOOK = 128;
-    public static final int THUNDERBIRD = 256;
-    public static final int EMOJI = 512;
+    public static final int MARKDOWN_LINK = 64;
+    public static final int GMAIL = 128;
+    public static final int OUTLOOK = 256;
+    public static final int THUNDERBIRD = 512;
+    public static final int EMOJI = 1024;
 
-    public static final int ALL = 1023;
+    public static final int ALL = 2047;
 
     /**
      * Returns all {@link MarkupEntry} that matches this {@code string}.
@@ -55,6 +56,10 @@ public class MarkupParser {
 
             if ((flags & LINK) == LINK) {
                 parseLinkMarkupEntries(string, markupEntries);
+            }
+
+            if ((flags & MARKDOWN_LINK) == MARKDOWN_LINK) {
+                parseMarkdownLinkMarkupEntries(string, markupEntries);
             }
 
             if ((flags & GMAIL) == GMAIL) {
@@ -134,6 +139,16 @@ public class MarkupParser {
             } else {
                 markupEntries.add(new MarkupEntry(MarkupType.LINK, matcher.start(), matcher.end(), text, link));
             }
+        }
+    }
+
+    private static void parseMarkdownLinkMarkupEntries(String string, List<MarkupEntry> markupEntries) {
+        Matcher matcher = Patterns.MARKDOWN_LINK.matcher(string);
+
+        while (matcher.find()) {
+            String text = matcher.group(1);
+            String link = matcher.group(2);
+            markupEntries.add(new MarkupEntry(MarkupType.LINK, matcher.start(), matcher.end(), text, link));
         }
     }
 
