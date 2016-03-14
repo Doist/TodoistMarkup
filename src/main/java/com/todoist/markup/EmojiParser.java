@@ -62,8 +62,7 @@ class EmojiParser {
         if (sEmojiPattern == null) {
             StringBuilder patternBuilder = new StringBuilder();
 
-            // Pattern for standard emojis.
-            patternBuilder.append("(");
+            patternBuilder.append("(?<=^|[\\s\\n\\.,;!?\\(\\)])(");
             patternBuilder.append(REGEXP_STANDARD_EMOJI);
 
             for(String shortcut : todoistShortcuts.keySet()) {
@@ -71,8 +70,7 @@ class EmojiParser {
                 patternBuilder.append(Pattern.quote(shortcut));
             }
 
-            // Don't convert :// part of url to emoji.
-            patternBuilder.append(")(?!/)");
+            patternBuilder.append(")");
 
             sEmojiPattern = Pattern.compile(patternBuilder.toString());
         }
