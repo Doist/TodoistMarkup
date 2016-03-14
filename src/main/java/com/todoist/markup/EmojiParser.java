@@ -71,7 +71,7 @@ class EmojiParser {
                 patternBuilder.append(Pattern.quote(shortcut));
             }
             // Exclude links ://
-            patternBuilder.append(")(?<!/)");
+            patternBuilder.append(")(?!/)");
 
             sEmojiPattern = Pattern.compile(patternBuilder.toString());
         }
