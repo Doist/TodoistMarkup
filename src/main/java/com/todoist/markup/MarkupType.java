@@ -17,12 +17,12 @@ public enum MarkupType {
     ITALIC,
 
     /**
-     * Inline code is surrounded by "`"
+     * Inline code is surrounded by "`".
      */
     INLINE_CODE,
 
     /**
-     * Code block is surrounded by "```"
+     * Code block is surrounded by "```".
      */
     CODE_BLOCK,
 
@@ -47,7 +47,7 @@ public enum MarkupType {
     THUNDERBIRD,
 
     /**
-     * Emojis are parsed by {@link EmojiParser}
+     * Emojis are parsed by {@link EmojiParser}.
      */
     EMOJI
 }
