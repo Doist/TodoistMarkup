@@ -17,6 +17,16 @@ public enum MarkupType {
     ITALIC,
 
     /**
+     * Inline code is surrounded by "`".
+     */
+    INLINE_CODE,
+
+    /**
+     * Code block is surrounded by "```".
+     */
+    CODE_BLOCK,
+
+    /**
      * Links can be plain links or contain a description using the format "http://domain.com (description)".
      */
     LINK,
@@ -37,7 +47,7 @@ public enum MarkupType {
     THUNDERBIRD,
 
     /**
-     * Emojis are parsed by {@link EmojiParser}
+     * Emojis are parsed by {@link EmojiParser}.
      */
     EMOJI
 }

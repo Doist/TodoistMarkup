@@ -9,12 +9,16 @@ public class MarkupParser {
     public static final int HEADER = 1;
     public static final int BOLD = 2;
     public static final int ITALIC = 4;
-    public static final int LINK = 8;
-    public static final int GMAIL = 16;
-    public static final int OUTLOOK = 32;
-    public static final int THUNDERBIRD = 64;
-    public static final int EMOJI = 128;
-    public static final int ALL = 255;
+    public static final int INLINE_CODE = 8;
+    public static final int CODE_BLOCK = 16;
+    public static final int LINK = 32;
+    public static final int MARKDOWN_LINK = 64;
+    public static final int GMAIL = 128;
+    public static final int OUTLOOK = 256;
+    public static final int THUNDERBIRD = 512;
+    public static final int EMOJI = 1024;
+
+    public static final int ALL = 2047;
 
     /**
      * Returns all {@link MarkupEntry} that matches this {@code string}.
@@ -42,8 +46,20 @@ public class MarkupParser {
                 parseItalicMarkupEntries(string, markupEntries);
             }
 
+            if ((flags & INLINE_CODE) == INLINE_CODE) {
+                parseInlineCodeMarkupEntries(string, markupEntries);
+            }
+
+            if ((flags & CODE_BLOCK) == CODE_BLOCK) {
+                parseCodeBlockMarkupEntries(string, markupEntries);
+            }
+
             if ((flags & LINK) == LINK) {
                 parseLinkMarkupEntries(string, markupEntries);
+            }
+
+            if ((flags & MARKDOWN_LINK) == MARKDOWN_LINK) {
+                parseMarkdownLinkMarkupEntries(string, markupEntries);
             }
 
             if ((flags & GMAIL) == GMAIL) {
@@ -92,6 +108,24 @@ public class MarkupParser {
         }
     }
 
+    private static void parseInlineCodeMarkupEntries(String string, List<MarkupEntry> markupEntries) {
+        Matcher matcher = Patterns.INLINE_CODE.matcher(string);
+
+        while (matcher.find()) {
+            String text = matcher.group(1);
+            markupEntries.add(new MarkupEntry(MarkupType.INLINE_CODE, matcher.start(), matcher.end(), text));
+        }
+    }
+
+    private static void parseCodeBlockMarkupEntries(String string, List<MarkupEntry> markupEntries) {
+        Matcher matcher = Patterns.CODE_BLOCK.matcher(string);
+
+        while (matcher.find()) {
+            String text = matcher.group(1);
+            markupEntries.add(new MarkupEntry(MarkupType.CODE_BLOCK, matcher.start(), matcher.end(), text));
+        }
+    }
+
     private static void parseLinkMarkupEntries(String string, List<MarkupEntry> markupEntries) {
         Matcher matcher = Patterns.LINK.matcher(string);
 
@@ -105,6 +139,16 @@ public class MarkupParser {
             } else {
                 markupEntries.add(new MarkupEntry(MarkupType.LINK, matcher.start(), matcher.end(), text, link));
             }
+        }
+    }
+
+    private static void parseMarkdownLinkMarkupEntries(String string, List<MarkupEntry> markupEntries) {
+        Matcher matcher = Patterns.MARKDOWN_LINK.matcher(string);
+
+        while (matcher.find()) {
+            String text = matcher.group(1);
+            String link = matcher.group(2);
+            markupEntries.add(new MarkupEntry(MarkupType.LINK, matcher.start(), matcher.end(), text, link));
         }
     }
 
