@@ -94,8 +94,8 @@ public class MarkupParser {
         Matcher matcher = Patterns.BOLD.matcher(string);
 
         while (matcher.find()) {
-            String text = matcher.group(1);
-            markupEntries.add(new MarkupEntry(MarkupType.BOLD, matcher.start(), matcher.end(), text));
+            String text = matcher.group(2);
+            markupEntries.add(new MarkupEntry(MarkupType.BOLD, matcher.start(1), matcher.end(1), text));
         }
     }
 
@@ -103,8 +103,8 @@ public class MarkupParser {
         Matcher matcher = Patterns.ITALIC.matcher(string);
 
         while (matcher.find()) {
-            String text = matcher.group(1);
-            markupEntries.add(new MarkupEntry(MarkupType.ITALIC, matcher.start(), matcher.end(), text));
+            String text = matcher.group(2);
+            markupEntries.add(new MarkupEntry(MarkupType.ITALIC, matcher.start(1), matcher.end(1), text));
         }
     }
 

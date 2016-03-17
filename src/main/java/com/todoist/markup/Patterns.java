@@ -5,9 +5,9 @@ import java.util.regex.Pattern;
 class Patterns {
     public static final Pattern HEADER = Pattern.compile("^\\*\\s+");
     // Bold text is wrapped with __ or !! or **
-    public static final Pattern BOLD = Pattern.compile("(?<=^|[\\s!?,;>:\\(\\)])(?:\\*\\*|__|!!)(.*?)(?:\\*\\*|__|!!)(?=$|[\\s!?,;><:\\(\\)])");
+    public static final Pattern BOLD = Pattern.compile("(?:^|[\\s!?,;>:\\(\\)]+)((?:\\*\\*|__|!!)(.*?)(?:\\*\\*|__|!!))(?:$|[\\s!?,;><:\\(\\)]+)", Pattern.MULTILINE);
     // Italic text is wrapped with _ or *
-    public static final Pattern ITALIC = Pattern.compile("(?<=^|[\\s!?,;>:\\(\\)])(?:\\*|_)(.*?)(?:\\*|_)($|[\\s!?,;><:\\(\\)])");
+    public static final Pattern ITALIC = Pattern.compile("(?:^|[\\s!?,;>:\\(\\)]+)((?:\\*|_)(.*?)(?:\\*|_))(?:$|[\\s!?,;><:\\(\\)]+)", Pattern.MULTILINE);
     // Inline code is wrapped with `
     public static final Pattern INLINE_CODE = Pattern.compile("`([^`]+)`");
     // Code block is wrapped with ```
