@@ -11,8 +11,8 @@ public class MarkupParser {
     public static final int ITALIC = 4;
     public static final int INLINE_CODE = 8;
     public static final int CODE_BLOCK = 16;
-    public static final int LINK = 32;
-    public static final int MARKDOWN_LINK = 64;
+    public static final int MARKDOWN_LINK = 32;
+    public static final int LINK = 64;
     public static final int GMAIL = 128;
     public static final int OUTLOOK = 256;
     public static final int THUNDERBIRD = 512;
@@ -54,12 +54,12 @@ public class MarkupParser {
                 parseCodeBlockMarkupEntries(string, markupEntries);
             }
 
-            if ((flags & LINK) == LINK) {
-                parseLinkMarkupEntries(string, markupEntries);
-            }
-
             if ((flags & MARKDOWN_LINK) == MARKDOWN_LINK) {
                 parseMarkdownLinkMarkupEntries(string, markupEntries);
+            }
+
+            if ((flags & LINK) == LINK) {
+                parseLinkMarkupEntries(string, markupEntries);
             }
 
             if ((flags & GMAIL) == GMAIL) {
@@ -126,6 +126,16 @@ public class MarkupParser {
         }
     }
 
+    private static void parseMarkdownLinkMarkupEntries(String string, List<MarkupEntry> markupEntries) {
+        Matcher matcher = Patterns.MARKDOWN_LINK.matcher(string);
+
+        while (matcher.find()) {
+            String text = matcher.group(1);
+            String link = matcher.group(2);
+            markupEntries.add(new MarkupEntry(MarkupType.LINK, matcher.start(), matcher.end(), text, link));
+        }
+    }
+
     private static void parseLinkMarkupEntries(String string, List<MarkupEntry> markupEntries) {
         Matcher matcher = Patterns.LINK.matcher(string);
 
@@ -139,16 +149,6 @@ public class MarkupParser {
             } else {
                 markupEntries.add(new MarkupEntry(MarkupType.LINK, matcher.start(), matcher.end(), text, link));
             }
-        }
-    }
-
-    private static void parseMarkdownLinkMarkupEntries(String string, List<MarkupEntry> markupEntries) {
-        Matcher matcher = Patterns.MARKDOWN_LINK.matcher(string);
-
-        while (matcher.find()) {
-            String text = matcher.group(1);
-            String link = matcher.group(2);
-            markupEntries.add(new MarkupEntry(MarkupType.LINK, matcher.start(), matcher.end(), text, link));
         }
     }
 
@@ -187,7 +187,7 @@ public class MarkupParser {
 
         while (matcher.find()) {
             String emoji = getEmoji(matcher.group());
-            if(emoji != null) {
+            if (emoji != null) {
                 markupEntries.add(new MarkupEntry(MarkupType.EMOJI, matcher.start(), matcher.end(), emoji));
             }
         }
