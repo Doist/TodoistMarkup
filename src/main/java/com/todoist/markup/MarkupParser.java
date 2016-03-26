@@ -23,75 +23,75 @@ public class MarkupParser {
     /**
      * Returns all {@link MarkupEntry} that matches this {@code string}.
      */
-    public static List<MarkupEntry> getMarkupEntries(String string) {
-        return getMarkupEntries(string, ALL);
+    public static List<MarkupEntry> getMarkupEntries(CharSequence input) {
+        return getMarkupEntries(input, ALL);
     }
 
     /**
      * Returns all {@link MarkupEntry} of the type(s) set in {@code flags} that matches this {@code string}.
      */
-    public static List<MarkupEntry> getMarkupEntries(String string, int flags) {
+    public static List<MarkupEntry> getMarkupEntries(CharSequence input, int flags) {
         List<MarkupEntry> markupEntries = new ArrayList<MarkupEntry>();
 
-        if (string != null) {
+        if (input != null) {
             if ((flags & HEADER) == HEADER) {
-                parseHeaderMarkupEntries(string, markupEntries);
+                parseHeaderMarkupEntries(input, markupEntries);
             }
 
             if ((flags & BOLD) == BOLD) {
-                parseBoldMarkupEntries(string, markupEntries);
+                parseBoldMarkupEntries(input, markupEntries);
             }
 
             if ((flags & ITALIC) == ITALIC) {
-                parseItalicMarkupEntries(string, markupEntries);
+                parseItalicMarkupEntries(input, markupEntries);
             }
 
             if ((flags & INLINE_CODE) == INLINE_CODE) {
-                parseInlineCodeMarkupEntries(string, markupEntries);
+                parseInlineCodeMarkupEntries(input, markupEntries);
             }
 
             if ((flags & CODE_BLOCK) == CODE_BLOCK) {
-                parseCodeBlockMarkupEntries(string, markupEntries);
+                parseCodeBlockMarkupEntries(input, markupEntries);
             }
 
             if ((flags & MARKDOWN_LINK) == MARKDOWN_LINK) {
-                parseMarkdownLinkMarkupEntries(string, markupEntries);
+                parseMarkdownLinkMarkupEntries(input, markupEntries);
             }
 
             if ((flags & LINK) == LINK) {
-                parseLinkMarkupEntries(string, markupEntries);
+                parseLinkMarkupEntries(input, markupEntries);
             }
 
             if ((flags & GMAIL) == GMAIL) {
-                parseGmailMarkupEntries(string, markupEntries);
+                parseGmailMarkupEntries(input, markupEntries);
             }
 
             if ((flags & OUTLOOK) == OUTLOOK) {
-                parseOutlookMarkupEntries(string, markupEntries);
+                parseOutlookMarkupEntries(input, markupEntries);
             }
 
             if ((flags & THUNDERBIRD) == THUNDERBIRD) {
-                parseThunderbirdMarkupEntries(string, markupEntries);
+                parseThunderbirdMarkupEntries(input, markupEntries);
             }
 
             if ((flags & EMOJI) == EMOJI) {
-                parseEmojiMarkupEntries(string, markupEntries);
+                parseEmojiMarkupEntries(input, markupEntries);
             }
         }
 
         return markupEntries;
     }
 
-    private static void parseHeaderMarkupEntries(String string, List<MarkupEntry> markupEntries) {
-        Matcher matcher = Patterns.HEADER.matcher(string);
+    private static void parseHeaderMarkupEntries(CharSequence input, List<MarkupEntry> markupEntries) {
+        Matcher matcher = Patterns.HEADER.matcher(input);
 
         if (matcher.find()) {
             markupEntries.add(new MarkupEntry(MarkupType.HEADER, matcher.start(), matcher.end()));
         }
     }
 
-    private static void parseBoldMarkupEntries(String string, List<MarkupEntry> markupEntries) {
-        Matcher matcher = Patterns.BOLD.matcher(string);
+    private static void parseBoldMarkupEntries(CharSequence input, List<MarkupEntry> markupEntries) {
+        Matcher matcher = Patterns.BOLD.matcher(input);
 
         while (matcher.find()) {
             String text = matcher.group(2);
@@ -99,8 +99,8 @@ public class MarkupParser {
         }
     }
 
-    private static void parseItalicMarkupEntries(String string, List<MarkupEntry> markupEntries) {
-        Matcher matcher = Patterns.ITALIC.matcher(string);
+    private static void parseItalicMarkupEntries(CharSequence input, List<MarkupEntry> markupEntries) {
+        Matcher matcher = Patterns.ITALIC.matcher(input);
 
         while (matcher.find()) {
             String text = matcher.group(2);
@@ -108,8 +108,8 @@ public class MarkupParser {
         }
     }
 
-    private static void parseInlineCodeMarkupEntries(String string, List<MarkupEntry> markupEntries) {
-        Matcher matcher = Patterns.INLINE_CODE.matcher(string);
+    private static void parseInlineCodeMarkupEntries(CharSequence input, List<MarkupEntry> markupEntries) {
+        Matcher matcher = Patterns.INLINE_CODE.matcher(input);
 
         while (matcher.find()) {
             String text = matcher.group(1);
@@ -117,8 +117,8 @@ public class MarkupParser {
         }
     }
 
-    private static void parseCodeBlockMarkupEntries(String string, List<MarkupEntry> markupEntries) {
-        Matcher matcher = Patterns.CODE_BLOCK.matcher(string);
+    private static void parseCodeBlockMarkupEntries(CharSequence input, List<MarkupEntry> markupEntries) {
+        Matcher matcher = Patterns.CODE_BLOCK.matcher(input);
 
         while (matcher.find()) {
             String text = matcher.group(1);
@@ -126,8 +126,8 @@ public class MarkupParser {
         }
     }
 
-    private static void parseMarkdownLinkMarkupEntries(String string, List<MarkupEntry> markupEntries) {
-        Matcher matcher = Patterns.MARKDOWN_LINK.matcher(string);
+    private static void parseMarkdownLinkMarkupEntries(CharSequence input, List<MarkupEntry> markupEntries) {
+        Matcher matcher = Patterns.MARKDOWN_LINK.matcher(input);
 
         while (matcher.find()) {
             String text = matcher.group(1);
@@ -136,8 +136,8 @@ public class MarkupParser {
         }
     }
 
-    private static void parseLinkMarkupEntries(String string, List<MarkupEntry> markupEntries) {
-        Matcher matcher = Patterns.LINK.matcher(string);
+    private static void parseLinkMarkupEntries(CharSequence input, List<MarkupEntry> markupEntries) {
+        Matcher matcher = Patterns.LINK.matcher(input);
 
         while (matcher.find()) {
             String text = matcher.group(2);
@@ -152,8 +152,8 @@ public class MarkupParser {
         }
     }
 
-    private static void parseGmailMarkupEntries(String string, List<MarkupEntry> markupEntries) {
-        Matcher matcher = Patterns.GMAIL.matcher(string);
+    private static void parseGmailMarkupEntries(CharSequence input, List<MarkupEntry> markupEntries) {
+        Matcher matcher = Patterns.GMAIL.matcher(input);
 
         while (matcher.find()) {
             String text = matcher.group(2);
@@ -162,8 +162,8 @@ public class MarkupParser {
         }
     }
 
-    private static void parseOutlookMarkupEntries(String string, List<MarkupEntry> markupEntries) {
-        Matcher matcher = Patterns.OUTLOOK.matcher(string);
+    private static void parseOutlookMarkupEntries(CharSequence input, List<MarkupEntry> markupEntries) {
+        Matcher matcher = Patterns.OUTLOOK.matcher(input);
 
         while (matcher.find()) {
             String text = matcher.group(2);
@@ -172,8 +172,8 @@ public class MarkupParser {
         }
     }
 
-    private static void parseThunderbirdMarkupEntries(String string, List<MarkupEntry> markupEntries) {
-        Matcher matcher = Patterns.THUNDERBIRD.matcher(string);
+    private static void parseThunderbirdMarkupEntries(CharSequence input, List<MarkupEntry> markupEntries) {
+        Matcher matcher = Patterns.THUNDERBIRD.matcher(input);
 
         while (matcher.find()) {
             String text = matcher.group(1);
@@ -182,8 +182,8 @@ public class MarkupParser {
         }
     }
 
-    private static void parseEmojiMarkupEntries(String string, List<MarkupEntry> markupEntries) {
-        Matcher matcher = EmojiParser.getEmojiPattern().matcher(string);
+    private static void parseEmojiMarkupEntries(CharSequence input, List<MarkupEntry> markupEntries) {
+        Matcher matcher = EmojiParser.getEmojiPattern().matcher(input);
 
         while (matcher.find()) {
             String emoji = getEmoji(matcher.group());
