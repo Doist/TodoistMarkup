@@ -36,7 +36,7 @@ class EmojiParser {
     }
 
     @SuppressWarnings("unchecked")
-    static synchronized void init() throws IOException {
+    static synchronized void init() {
         JSONObject todoistShortcuts;
         if (sEmojiMap == null) {
             sEmojiMap = new JSONObject(EMOJIS_STANDARD);
