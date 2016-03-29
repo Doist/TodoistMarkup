@@ -1,6 +1,5 @@
 package com.todoist.markup;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -201,11 +200,7 @@ public class MarkupParser {
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
-                try {
-                    EmojiParser.init();
-                } catch (IOException e) {
-                    // Ignore. Very unlikely.
-                }
+                EmojiParser.init();
             }
         });
         thread.setPriority(Thread.MIN_PRIORITY);
