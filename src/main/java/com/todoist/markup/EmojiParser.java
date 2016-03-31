@@ -2,7 +2,7 @@ package com.todoist.markup;
 
 import org.json.JSONObject;
 
-import java.util.Set;
+import java.util.Iterator;
 import java.util.regex.Pattern;
 
 class EmojiParser {
@@ -29,25 +29,28 @@ class EmojiParser {
 
     @SuppressWarnings("unchecked")
     static synchronized void init() {
-        JSONObject todoistEmojis;
         if (sEmojiMap == null) {
             sEmojiMap = new JSONObject(Emojis.getStandard());
 
-            todoistEmojis = new JSONObject(Emojis.getTodoist());
-            for (String key : (Set<String>) todoistEmojis.keySet()) {
+            JSONObject todoistEmojis = new JSONObject(Emojis.getTodoist());
+
+            StringBuilder builder = new StringBuilder();
+            builder.append("(?<=^|[\\s\\n\\.,;!?\\(\\)])(");
+            builder.append(REGEXP_STANDARD_EMOJI);
+
+            Iterator<String> it = (Iterator<String>) todoistEmojis.keys();
+            while (it.hasNext()) {
+                String key = it.next();
+
                 sEmojiMap.put(key, todoistEmojis.get(key));
+
+                builder.append("|");
+                builder.append(Pattern.quote(key));
             }
 
-            StringBuilder patternBuilder = new StringBuilder();
-            patternBuilder.append("(?<=^|[\\s\\n\\.,;!?\\(\\)])(");
-            patternBuilder.append(REGEXP_STANDARD_EMOJI);
-            for (String key : (Set<String>) todoistEmojis.keySet()) {
-                patternBuilder.append("|");
-                patternBuilder.append(Pattern.quote(key));
-            }
-            patternBuilder.append(")");
+            builder.append(")");
 
-            sEmojiPattern = Pattern.compile(patternBuilder.toString());
+            sEmojiPattern = Pattern.compile(builder.toString());
         }
     }
 }
