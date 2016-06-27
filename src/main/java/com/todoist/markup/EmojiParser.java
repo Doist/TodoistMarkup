@@ -2,11 +2,17 @@ package com.todoist.markup;
 
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Iterator;
 import java.util.regex.Pattern;
 
 class EmojiParser {
     private static final String REGEXP_STANDARD_EMOJI = "(:[a-zA-Z\\p{L}0-9_’\\-\\.\\&]+:)";
+
+    private static final String EMOJIS_STANDARD = "emojis_standard.json";
+    private static final String EMOJIS_TODOIST = "emojis_todoist.json";
 
     private static JSONObject sEmojiMap;
     private static Pattern sEmojiPattern;
@@ -30,9 +36,18 @@ class EmojiParser {
     @SuppressWarnings("unchecked")
     static synchronized void init() {
         if (sEmojiMap == null) {
-            sEmojiMap = new JSONObject(Emojis.getStandard());
+            ClassLoader classLoader = EmojiParser.class.getClassLoader();
+            JSONObject standardEmojis;
+            JSONObject todoistEmojis;
+            try {
+                standardEmojis = new JSONObject(inputStreamToString(classLoader.getResourceAsStream(EMOJIS_STANDARD)));
+                todoistEmojis = new JSONObject(inputStreamToString(classLoader.getResourceAsStream(EMOJIS_TODOIST)));
+            } catch (IOException e) {
+                e.printStackTrace();
+                return;
+            }
 
-            JSONObject todoistEmojis = new JSONObject(Emojis.getTodoist());
+            sEmojiMap = standardEmojis;
 
             StringBuilder builder = new StringBuilder();
             builder.append("(?<=^|[\\s\\n\\.,;!?\\(\\)])(");
@@ -52,5 +67,20 @@ class EmojiParser {
 
             sEmojiPattern = Pattern.compile(builder.toString());
         }
+    }
+
+    private static String inputStreamToString(InputStream in) throws IOException {
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        byte[] buffer = new byte[2048];
+        int count;
+        while ((count = in.read(buffer)) != -1) {
+            out.write(buffer, 0, count);
+        }
+        try {
+            in.close();
+        } catch(IOException e) {
+            /* Ignore. */
+        }
+        return out.toString("UTF-8");
     }
 }

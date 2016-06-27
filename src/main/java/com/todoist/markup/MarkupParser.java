@@ -196,14 +196,7 @@ public class MarkupParser {
         return EmojiParser.getEmoji(key);
     }
 
-    public static void initAsync() {
-        Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                EmojiParser.init();
-            }
-        });
-        thread.setPriority(Thread.MIN_PRIORITY);
-        thread.start();
+    public static void init() {
+        EmojiParser.init();
     }
 }
