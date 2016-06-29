@@ -36,12 +36,11 @@ class EmojiParser {
     @SuppressWarnings("unchecked")
     static synchronized void init() {
         if (sEmojiMap == null) {
-            ClassLoader classLoader = EmojiParser.class.getClassLoader();
             JSONObject standardEmojis;
             JSONObject todoistEmojis;
             try {
-                standardEmojis = new JSONObject(inputStreamToString(classLoader.getResourceAsStream(EMOJIS_STANDARD)));
-                todoistEmojis = new JSONObject(inputStreamToString(classLoader.getResourceAsStream(EMOJIS_TODOIST)));
+                standardEmojis = new JSONObject(streamToString(EmojiParser.class.getResourceAsStream(EMOJIS_STANDARD)));
+                todoistEmojis = new JSONObject(streamToString(EmojiParser.class.getResourceAsStream(EMOJIS_TODOIST)));
             } catch (IOException e) {
                 e.printStackTrace();
                 return;
@@ -69,7 +68,7 @@ class EmojiParser {
         }
     }
 
-    private static String inputStreamToString(InputStream in) throws IOException {
+    private static String streamToString(InputStream in) throws IOException {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         byte[] buffer = new byte[2048];
         int count;
