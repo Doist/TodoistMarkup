@@ -92,18 +92,28 @@ public class MarkupParser {
     private static void parseBoldMarkupEntries(CharSequence input, List<MarkupEntry> markupEntries) {
         Matcher matcher = Patterns.BOLD.matcher(input);
 
-        while (matcher.find()) {
+        int startAt = 0;
+        while (matcher.find(startAt)) {
             String text = matcher.group(2);
-            markupEntries.add(new MarkupEntry(MarkupType.BOLD, matcher.start(1), matcher.end(1), text));
+            int end = matcher.end(1);
+            markupEntries.add(new MarkupEntry(MarkupType.BOLD, matcher.start(1), end, text));
+            // Start next search where this one finished. Otherwise "__bold1__ __bold2__" won't work because second
+            // search will start after space character.
+            startAt = end;
         }
     }
 
     private static void parseItalicMarkupEntries(CharSequence input, List<MarkupEntry> markupEntries) {
         Matcher matcher = Patterns.ITALIC.matcher(input);
 
-        while (matcher.find()) {
+        int startAt = 0;
+        while (matcher.find(startAt)) {
             String text = matcher.group(2);
-            markupEntries.add(new MarkupEntry(MarkupType.ITALIC, matcher.start(1), matcher.end(1), text));
+            int end = matcher.end(1);
+            markupEntries.add(new MarkupEntry(MarkupType.ITALIC, matcher.start(1), end, text));
+            // Start next search where this one finished. Otherwise "_italic1_ _italic2_" won't work because second
+            // search will start after space character.
+            startAt = end;
         }
     }
 
