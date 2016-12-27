@@ -41,7 +41,7 @@ class EmojiParser {
             try {
                 standardEmojis = new JSONObject(streamToString(EmojiParser.class.getResourceAsStream(EMOJIS_STANDARD)));
                 todoistEmojis = new JSONObject(streamToString(EmojiParser.class.getResourceAsStream(EMOJIS_TODOIST)));
-            } catch (IOException e) {
+            } catch (IOException | NullPointerException e) {
                 e.printStackTrace();
                 return;
             }
