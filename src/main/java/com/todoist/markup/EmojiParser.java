@@ -70,7 +70,7 @@ class EmojiParser {
 
     private static String streamToString(InputStream in) throws IOException {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
-        byte[] buffer = new byte[2048];
+        byte[] buffer = new byte[8192];
         int count;
         while ((count = in.read(buffer)) != -1) {
             out.write(buffer, 0, count);
