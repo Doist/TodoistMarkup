@@ -85,7 +85,11 @@ public class MarkupParser {
         Matcher matcher = Patterns.HEADER.matcher(input);
 
         if (matcher.find()) {
-            markupEntries.add(new MarkupEntry(MarkupType.HEADER, matcher.start(), matcher.end()));
+            String text = matcher.group(1);
+            if (text == null) {
+                text = matcher.group(2);
+            }
+            markupEntries.add(new MarkupEntry(MarkupType.HEADER, matcher.start(), matcher.end(), text));
         }
     }
 

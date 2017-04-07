@@ -21,18 +21,36 @@ public class MarkupTest {
     public void headers() {
         List<MarkupEntry> markupEntries;
 
+        // Regular header.
+        markupEntries = MarkupParser.getMarkupEntries("Header:", MarkupParser.HEADER);
+        assertThat(markupEntries, hasSize(1));
+        assertThat(markupEntries.get(0), is(equivalentTo(MarkupType.HEADER, 0, 7, "Header:", null)));
+
+        // Header with only a colon.
+        markupEntries = MarkupParser.getMarkupEntries(":", MarkupParser.HEADER);
+        assertThat(markupEntries, hasSize(1));
+        assertThat(markupEntries.get(0), is(equivalentTo(MarkupType.HEADER, 0, 1, ":", null)));
+
         // Header with space.
         markupEntries = MarkupParser.getMarkupEntries("* Header", MarkupParser.HEADER);
         assertThat(markupEntries, hasSize(1));
-        assertThat(markupEntries.get(0), is(equivalentTo(MarkupType.HEADER, 0, 2, null, null)));
+        assertThat(markupEntries.get(0), is(equivalentTo(MarkupType.HEADER, 0, 8, "Header", null)));
 
-        // Header without space.
-        markupEntries = MarkupParser.getMarkupEntries("*Header", MarkupParser.HEADER);
+        // Header with both syntaxes.
+        markupEntries = MarkupParser.getMarkupEntries("* Double header:", MarkupParser.HEADER);
         assertThat(markupEntries, hasSize(1));
-        assertThat(markupEntries.get(0), is(equivalentTo(MarkupType.HEADER, 0, 1, null, null)));
+        assertThat(markupEntries.get(0), is(equivalentTo(MarkupType.HEADER, 0, 16, "Double header:", null)));
 
-        // Invalid header, it starts in the middle of the text.
+        // Not a header, no whitespace after asterisk.
+        markupEntries = MarkupParser.getMarkupEntries("*Header", MarkupParser.HEADER);
+        assertThat(markupEntries, is(empty()));
+
+        // Not a header, the asterisk is in the middle of the text.
         markupEntries = MarkupParser.getMarkupEntries("Text * NotHeader", MarkupParser.HEADER);
+        assertThat(markupEntries, is(empty()));
+
+        // Not a header, only an asterisk.
+        markupEntries = MarkupParser.getMarkupEntries("*", MarkupParser.HEADER);
         assertThat(markupEntries, is(empty()));
     }
 
@@ -259,7 +277,7 @@ public class MarkupTest {
     }
 
     private Matcher<MarkupEntry> equivalentTo(final MarkupType type, final int start, final int end,
-                                            final String text, final String link) {
+                                              final String text, final String link) {
         return new TypeSafeMatcher<MarkupEntry>() {
             @Override
             protected boolean matchesSafely(MarkupEntry entry) {

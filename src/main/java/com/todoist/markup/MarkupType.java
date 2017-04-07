@@ -2,7 +2,7 @@ package com.todoist.markup;
 
 public enum MarkupType {
     /**
-     * Headers start with an "*".
+     * Headers end with a ":" or start with an "*".
      */
     HEADER,
 
