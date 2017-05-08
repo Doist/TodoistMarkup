@@ -3,7 +3,7 @@ package com.todoist.markup;
 import java.util.regex.Pattern;
 
 class Patterns {
-    static final Pattern HEADER = Pattern.compile("^\\*\\s(.+)|(.*:)$");
+    static final Pattern HEADER = Pattern.compile("^\\*\\s(.+)|^([^:]*:)$");
     static final Pattern CODE_BLOCK = Pattern.compile("```([^`{3}]+)```");
     static final Pattern CODE_INLINE = Pattern.compile("`([^`]+)`");
     static final Pattern GMAIL = Pattern.compile("\\[\\[gmail=(.+?),\\s*(.+?)\\]\\]");

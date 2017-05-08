@@ -52,6 +52,10 @@ public class MarkupTest {
         // Not a header, only an asterisk.
         markupEntries = MarkupParser.getMarkupEntries("*", MarkupParser.HEADER);
         assertThat(markupEntries, is(empty()));
+
+        // Not a header, text has two colons.
+        markupEntries = MarkupParser.getMarkupEntries("NotHeader :smile:", MarkupParser.HEADER);
+        assertThat(markupEntries, is(empty()));
     }
 
     @Test
